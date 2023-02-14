@@ -23,3 +23,4 @@ def test_search2(init_driver):
     homepage.search("Abracadabra" + Keys.ENTER)
     homepage.clear_search()
     time.sleep(20)
+
