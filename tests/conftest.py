@@ -1,5 +1,7 @@
+from datetime import datetime
 import pytest
 from selenium import webdriver
+from pymongo import MongoClient
 
 
 def pytest_addoption(parser):
@@ -9,6 +11,34 @@ def pytest_addoption(parser):
         default='Chrome',
         help='Choose browser: Chrome, Firefox, Edge'
     )
+
+
+@pytest.fixture(autouse=True, scope='session')
+def mongodb_fixture(request):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['framework_test']
+    passed_count = 0
+    failed_count = 0
+    yield
+    session = request.node
+    for item in session.items:
+        if item.session.testsfailed:
+            failed_count += 1
+        elif item.session.testscollected:
+            passed_count += 1
+    failed_result = {
+        'timestamp': datetime.utcnow(),
+        'result': 'FAILED',
+        'count': failed_count
+    }
+    passed_result = {
+        'timestamp': datetime.utcnow(),
+        'result': 'PASSED',
+        'count': passed_count
+    }
+    db.framework.drop()
+    db.framework.insert_one(failed_result)
+    db.framework.insert_one(passed_result)
 
 
 @pytest.fixture
