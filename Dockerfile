@@ -11,7 +11,7 @@ RUN apt-get update \
         build-essential \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python get-pip.py \
-    && pip install pytest selenium pytest-html pytest-xdist\
+    && pip install pytest selenium pytest-html pytest-xdist pymongo\
     && apt-get remove --purge -y \
         curl \
         wget \
