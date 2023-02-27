@@ -9,11 +9,12 @@ def push_image():
 
     client.login(username='dazeforlife', password=password)
 
-    image_tag = 'dazeforlife/myimage:latest'
+    image_tag = 'dazeforlife/myimage:version1.0'
     image = client.images.get('myimage')
     image.tag(image_tag)
 
     client.images.push(image_tag)
+    return image_tag
 
 
 def check_mongodb_documents():
@@ -27,7 +28,9 @@ def check_mongodb_documents():
             print("Error, not all test are PASSED")
         elif doc['result'] == 'PASSED' and doc['count'] > 0:
             print("Pushing image to dockerhub")
-            push_image()
+            tag = push_image()
+            col.insert_one({'tag': tag})
+            break
 
 
 if __name__ == "__main__":
