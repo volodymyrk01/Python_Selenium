@@ -14,5 +14,5 @@ def get_image_tag_from_mongodb():
         return tag
 
 
-if __name__ == "__main__":
-    get_image_tag_from_mongodb()
+tag = get_image_tag_from_mongodb()
+print(tag)
