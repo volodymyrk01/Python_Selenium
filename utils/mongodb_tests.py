@@ -29,7 +29,8 @@ def check_mongodb_documents():
         elif doc['result'] == 'PASSED' and doc['count'] > 0:
             print("Pushing image to dockerhub")
             tag = push_image()
-            col.insert_one({'tag': tag})
+            db.image_tag.drop()
+            db.image_tag.insert_one({'tag': tag})
             break
 
 
