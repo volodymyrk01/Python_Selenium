@@ -5,7 +5,7 @@ from pymongo import MongoClient
 def get_image_tag_from_mongodb():
     client = MongoClient('mongodb://localhost:27017/')
     db = client.framework_test
-    col = db.framework
+    col = db.image_tag
     for doc in col.find():
         if not "tag" in doc:
             continue
