@@ -19,9 +19,6 @@ docker run -d -p 27017:27017 --name m1 mongo
 ```
 pipeline {
     agent any
-    environment {
-    password = credentials('dockerhub')
-    }
     stages {
         stage('Building image'){
             steps{
@@ -103,5 +100,4 @@ pipeline {
 }
 ```
 9. Go to Jenkins Dashboard -> Manage Jenkins -> Manage nodes and clouds -> Click on settings button for Built-in Node -> Add number of executors to 3
-10. Go to Manage Jenkins -> Manage Credentials -> Click to global -> Add credentials -> Choose a secret text kind -> Scope Global -> Type your secret to docker hub -> and type "dockerhub" to ID field
-11. Go to Dashboard and Run build-and-push-image pipeline
+10. Go to Dashboard and Run build-and-push-image pipeline
