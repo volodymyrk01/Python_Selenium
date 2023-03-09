@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 import docker
-import os
 import argparse
 
 
@@ -9,10 +8,7 @@ def push_image():
     parser.add_argument('image_tag', type=str)
     args = parser.parse_args()
 
-    password = os.environ.get('password')
     client = docker.from_env()
-
-    client.login(username='dazeforlife', password=password)
 
     image_tag = args.image_tag
     image = client.images.get('myimage')
